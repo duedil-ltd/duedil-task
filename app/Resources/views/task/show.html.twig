@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Task</h1>
+    <div class="well">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ task.id }}</td>
+                </tr>
+                <tr>
+                    <th>Title</th>
+                    <td>{{ task.title }}</td>
+                </tr>
+                <tr>
+                    <th>Body</th>
+                    <td>{{ task.body }}</td>
+                </tr>
+                <tr>
+                    <th>Created</th>
+                    <td>{% if task.created %}{{ task.created|date('Y-m-d H:i:s') }}{% endif %}</td>
+                </tr>
+                <tr>
+                    <th>Updated</th>
+                    <td>{% if task.updated %}{{ task.updated|date('Y-m-d H:i:s') }}{% endif %}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    {{ form_start(delete_form) }}
+    <input type="submit" value="Delete" class="btn btn-danger pull-left">
+    {{ form_end(delete_form) }}
+
+    <div class="pull-left"></div>
+        <a href="{{ path('task_edit', { 'id': task.id }) }}" class="btn btn-primary">Edit</a>
+    </div>
+
+    <div class="pull-right">
+        <a href="{{ path('task_index') }}">Back to the list</a>
+    </div>
+{% endblock %}

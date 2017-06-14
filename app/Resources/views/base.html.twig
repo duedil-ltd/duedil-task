@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Duedil Task{% endblock %}</title>
+        {% stylesheets
+            '@bootstrap_css'
+            '@duedil_task_css'
+            filter='scssphp,cssrewrite'
+            output='css/DuedilTask.css' %}
+                <link href="{{ asset_url }}" type="text/css" rel="stylesheet"/>
+        {% endstylesheets %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="{{ path('task_index') }}">DueDil Task</a>
+                </div>
+                <div id="navbar" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="{{ path('task_index') }}">Show tasks</a></li>
+                        <li><a href="{{ path('task_new') }}">Create task</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="container">
+            <div class="inner">
+                {% block body %}{% endblock %}
+            </div>
+        </div>
+        {% javascripts
+            '@jquery'
+            '@bootstrap_js'
+            filter='?jsqueeze'
+            output='js/DuedilTask.js' %}
+                <script src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

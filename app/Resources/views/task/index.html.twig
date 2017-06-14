@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Task list</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Body</th>
+                <th>Created</th>
+                <th>Updated</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for task in tasks %}
+            <tr>
+                <td><a href="{{ path('task_show', { 'id': task.id }) }}">{{ task.id }}</a></td>
+                <td>{{ task.title }}</td>
+                <td>{{ task.body }}</td>
+                <td>{% if task.created %}{{ task.created|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if task.updated %}{{ task.updated|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>
+                    <div class="btn-group">
+                        <a href="{{ path('task_show', { 'id': task.id }) }}" class="btn btn-default btn-xs">show</a>
+                        <a href="{{ path('task_edit', { 'id': task.id }) }}" class="btn btn-default btn-xs">edit</a>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div>
+        <a href="{{ path('task_new') }}" class="btn btn-primary">Create a new task</a>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="input-group">
+                <span class="input-group-addon" id="updated-before-label">Show tasks updated before</span>
+                <input type="text" class="form-control" id="updated-before" aria-describedby="updated-before-label" placeholder="{{ "now"|date("Y-m-d") }}">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" id="updated-before-submit">Go!</button>
+                </span>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="input-group">
+                <span class="input-group-addon" id="task-by-ids-label">Show tasks by ids</span>
+                <input type="text" class="form-control" id="task-by-ids" aria-describedby="task-by-ids-label" placeholder="1,3,7">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" id="task-by-ids-submit">Go!</button>
+                </span>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="application/javascript">
+        $(function(){
+            $("#updated-before-submit").bind('click', function(){
+                var beforeDate = $("#updated-before").val();
+                window.location.href = '/before/' + beforeDate;
+            });
+
+          $("#task-by-ids-submit").bind('click', function(){
+            var ids = $("#task-by-ids").val().split(',');
+            window.location.href = '/selected?' + $.param({ids: ids});
+          });
+        });
+    </script>
+{% endblock %}

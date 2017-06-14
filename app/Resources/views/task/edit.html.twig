@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Task edit</h1>
+
+    {{ form_start(edit_form) }}
+        {{ form_widget(edit_form) }}
+        <input type="submit" value="Save" class="btn btn-success pull-left"/>
+    {{ form_end(edit_form) }}
+
+    <div class="pull-left">
+        {{ form_start(delete_form) }}
+            <input type="submit" value="Delete" class="btn btn-danger">
+        {{ form_end(delete_form) }}
+    </div>
+    <div class="pull-right">
+        <a href="{{ path('task_index') }}">Back to the list</a>
+    </div>
+{% endblock %}
